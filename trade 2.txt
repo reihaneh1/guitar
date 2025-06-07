@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fa" >
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>سایت تریدینگ حرفه‌ای</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
+body {
+margin: 0;
+font-family: 'Vazirmatn', sans-serif;
+background-color: #121212;
+color: #e0e0e0;
+direction: rtl;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+}
+header {
+text-align: center;
+margin-bottom: 30px;
+}
+header h1 {
+font-size: 2.8rem;
+margin: 0;
+color: #1de9b6;
+letter-spacing: 2px;
+}
+main {
+background-color: #1f1f1f;
+border-radius: 12px;
+padding: 30px;
+max-width: 900px;
+width: 100%;
+box-shadow: 0 0 15px #1de9b6aa;
+}
+.profile-img {
+display: block;
+margin: 0 auto 25px auto;
+width: 160px;
+height: 160px;
+border-radius: 50%;
+object-fit: cover;
+border: 3px solid #1de9b6;
+}
+section {
+margin-bottom: 35px;
+}
+h2 {
+color: #1de9b6;
+margin-bottom: 15px;
+border-bottom: 2px solid #1de9b6;
+padding-bottom: 6px;
+font-weight: 700;
+}
+p {
+line-height: 1.6;
+font-size: 1.1rem;
+}
+/* ویدئوها */
+#video-list {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+}
+video {
+width: 280px;
+border-radius: 12px;
+box-shadow: 0 0 10px #1de9b6bb;
+}
+input[type="file"] {
+margin-top: 10px;
+color: #fff;
+background-color: #333;
+border: 1px solid #1de9b6;
+border-radius: 6px;
+padding: 7px 12px;
+cursor: pointer;
+width: 100%;
+max-width: 280px;
+}
+/* چت آنلاین */
+#chat-box {
+background-color: #222;
+border-radius: 10px;
+padding: 15px;
+height: 320px;
+overflow-y: auto;
+box-shadow: inset 0 0 10px #1de9b6aa;
+margin-bottom: 10px;
+font-size: 0.95rem;
+}
+#chat-input {
+width: 100%;
+max-width: 100%;
+padding: 12px;
+border-radius: 8px;
+border: none;
+font-size: 1rem;
+background-color: #333;
+color: #eee;
+box-shadow: 0 0 8px #1de9b6aa;
+}
+#chat-input::placeholder {
+color: #bbb;
+}
+/* دکمه پرداخت */
+#payment-btn {
+background: linear-gradient(90deg, #00ff99, #00cc88);
+border: none;
+border-radius: 15px;
+padding: 16px 0;
+font-size: 1.3rem;
+font-weight: 700;
+color: #121212;
+width: 100%;
+max-width: 320px;
+cursor: pointer;
+box-shadow: 0 0 15px #00ff9977;
+transition: background 0.3s ease;
+margin: 0 auto;
+display: block;
+}
+#payment-btn:hover {
+background: linear-gradient(90deg, #00cc88, #00ff99);
+box-shadow: 0 0 25px #00ff99aa;
+}
+/* پیام‌های چت */
+.chat-message {
+background-color: #1de9b6;
+color: #121212;
+padding: 8px 12px;
+border-radius: 10px;
+margin-bottom: 10px;
+max-width: 80%;
+word-wrap: break-word;
+}
+.chat-message.self {
+background-color: #00cc88;
+margin-left: auto;
+}
+/* ریسپانسیو */
+@media (max-width: 600px) {
+video {
+width: 100%;
+}
+#payment-btn {
+max-width: 100%;
+}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>معرفی تریدر حرفه‌ای</h1>
+</header>
+<main>
+<img src="https://i.pravatar.cc/160?img=47" alt="عکس پروفایل" class="profile-img" />
+<section>
+<h2>رزومه ترید</h2>
+<p>من یک تریدر با بیش از ۵ سال سابقه در بازارهای کریپتو و فارکس هستم. تخصص من تحلیل تکنیکال، مدیریت ریسک و استراتژی‌های پیشرفته معاملاتی است که در طی سال‌ها به آن‌ها مسلط شده‌ام.</p>
+</section>
+
+<section>
+<h2>ویدئوهای آموزشی من</h2>
+<input type="file" id="video-upload" accept="video/*" multiple />
+<div id="video-list"></div>
+</section>
+
+<section>
+<h2>چت آنلاین</h2>
+<div id="chat-box"></div>
+<input type="text" id="chat-input" placeholder="پیام خود را وارد کنید و اینتر بزنید..." />
+</section>
+
+<section>
+<h2>پرداخت با تتر</h2>
+<button id="payment-btn">پرداخت با تتر</button>
+</section>
+</main>
+
+<script>
+// آپلود و نمایش چند ویدئو
+const videoInput = document.getElementById('video-upload');
+const videoList = document.getElementById('video-list');
+
+videoInput.addEventListener('change', () => {
+videoList.innerHTML = '';
+const files = videoInput.files;
+for(let i=0; i<files.length; i++) {
+const file = files[i];
+const videoURL = URL.createObjectURL(file);
+const videoElem = document.createElement('video');
+videoElem.src = videoURL;
+videoElem.controls = true;
+videoList.appendChild(videoElem);
+}
+});
+
+// چت ساده با استایل
+const chatBox = document.getElementById('chat-box');
+const chatInput = document.getElementById('chat-input');
+
+chatInput.addEventListener('keypress', e => {
+if(e.key === 'Enter' && chatInput.value.trim() !== '') {
+const msgDiv = document.createElement('div');
+msgDiv.textContent = chatInput.value;
+msgDiv.classList.add('chat-message', 'self');
+chatBox.appendChild(msgDiv);
+chatInput.value = '';
+chatBox.scrollTop = chatBox.scrollHeight;
+}
+});
+
+// دکمه پرداخت (فعلاً فقط پیام هشدار)
+document.getElementById('payment-btn').addEventListener('click', () => {
+alert('درگاه پرداخت تتر به زودی فعال می‌شود.');
+});
+</script>
+</body>
+</html>
